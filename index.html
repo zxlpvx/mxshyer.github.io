@@ -71,6 +71,11 @@ header{position:sticky;top:0;z-index:60;background:rgba(253,246,244,.92);backdro
 .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
 .ph .bloom{font-size:34px;opacity:.55;}
 .showcase-label{padding:10px 12px;font-size:12.5px;letter-spacing:.5px;color:var(--plum-soft);text-align:center;}
+.showcase-card.wrap-card{position:relative;}
+.wrap-card .ph{position:relative;}
+.wrap-card .addbtn{position:absolute;right:8px;bottom:8px;box-shadow:0 4px 10px -3px rgba(74,47,56,.4);}
+.wrap-card .showcase-label{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;}
+.wrap-card .showcase-label .wp{color:var(--rose-deep);font-weight:500;}
 @media(min-width:760px){
   .showcase-scroll{display:grid;grid-template-columns:repeat(4,1fr);overflow:visible;padding:4px 0 0;}
   .showcase-card{max-width:none;}
@@ -80,19 +85,20 @@ header{position:sticky;top:0;z-index:60;background:rgba(253,246,244,.92);backdro
 /* CATEGORY ACCORDIONS */
 .cat{border-top:1px solid var(--line);}
 .cat:last-child{border-bottom:1px solid var(--line);}
-.cat-head{display:flex;align-items:center;justify-content:space-between;padding:20px 4px;cursor:pointer;user-select:none;}
-.cat-head h3{font-size:22px;font-style:italic;}
-.cat-head .cnt{font-size:12px;color:var(--gold);letter-spacing:1px;}
-.chev{width:11px;height:11px;border-right:1.5px solid var(--rose-deep);border-bottom:1.5px solid var(--rose-deep);transform:rotate(45deg);transition:transform .25s;margin-left:12px;flex:0 0 auto;}
+.cat-head{display:flex;align-items:center;gap:14px;padding:16px 4px;cursor:pointer;user-select:none;}
+.cat-head .ph{width:68px;flex:0 0 68px;height:85px;aspect-ratio:auto;border-radius:3px;}
+.cat-head-info{flex:1;min-width:0;}
+.cat-head h3{font-size:19px;font-style:italic;font-weight:600;line-height:1.15;}
+.cat-head .blurb-head{font-size:12.3px;color:var(--plum-soft);margin-top:3px;line-height:1.4;}
+.cat-head .cnt{font-size:11px;color:var(--gold);letter-spacing:1px;white-space:nowrap;}
+.cat-head-right{display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex:0 0 auto;}
+.chev{width:10px;height:10px;border-right:1.5px solid var(--rose-deep);border-bottom:1.5px solid var(--rose-deep);transform:rotate(45deg);transition:transform .25s;flex:0 0 auto;}
 .cat.open .chev{transform:rotate(-135deg);}
 .cat-body{max-height:0;overflow:hidden;transition:max-height .35s ease;}
-.cat.open .cat-body{max-height:3000px;}
-.item{display:flex;gap:16px;padding:18px 4px;border-top:1px solid var(--line);}
-.item .ph{width:104px;flex:0 0 104px;border-radius:3px;}
-.item-info{flex:1;min-width:0;}
-.item-info h4{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:600;margin-bottom:3px;}
-.item-info .blurb{font-size:12.8px;color:var(--plum-soft);margin-bottom:10px;line-height:1.45;}
+.cat.open .cat-body{max-height:1000px;}
+.sizes-wrap{padding:2px 4px 18px 86px;}
 .sizes{display:flex;flex-direction:column;gap:6px;}
+@media(max-width:480px){.sizes-wrap{padding-left:4px;}}
 .size-row{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--cream-2);border-radius:2px;padding:7px 6px 7px 12px;}
 .size-row .sl{font-size:12.8px;color:var(--plum);}
 .size-row .sp{font-size:12.8px;color:var(--rose-deep);font-weight:500;margin-left:6px;}
@@ -185,7 +191,7 @@ footer .fnote{margin-top:26px;font-size:11px;color:#8f6d76;}
   <img class="hero-img" src="b1.png" alt="" onerror="this.style.display='none'">
   <div class="hero-veil"></div>
   <div class="hero-content">
-    <div class="hero-eyebrow">MAAFUSHI · HANDMADE TO ORDER</div>
+    <div class="hero-eyebrow">MALDIVES · HANDMADE TO ORDER</div>
     <h1>Maison De Fleur</h1>
     <p>Quiet, romantic bouquets made by hand for the people you love — and the moments worth marking.</p>
     <a href="#showcase" class="btn btn-primary">View Our Bouquets</a>
@@ -228,7 +234,12 @@ footer .fnote{margin-top:26px;font-size:11px;color:#8f6d76;}
     </div>
     <h3 style="font-size:19px;font-style:italic;margin:8px 4px 0;">Leaves</h3>
     <div id="leavesList"></div>
-    <h3 style="font-size:19px;font-style:italic;margin:28px 4px 0;">Decorations</h3>
+
+    <h3 style="font-size:19px;font-style:italic;margin:32px 4px 0;">Wrapping</h3>
+    <p style="font-size:12.5px;color:var(--plum-soft);padding:8px 4px 14px;">Every wrapping style is a flat <b>MVR 75</b> — the bouquet's size never changes the price. (A discount applies for very small bouquets.) Want something custom? DM us and we'll see what we can do.</p>
+    <div class="showcase-scroll" id="wrapGrid" style="padding-left:0;padding-right:0;"></div>
+
+    <h3 style="font-size:19px;font-style:italic;margin:32px 4px 0;">Decorations</h3>
     <p style="font-size:12.5px;color:var(--plum-soft);padding:8px 4px 0;">These are sourced on order from shops, markets and print stores — we only add a flat MVR 100 handling fee on top of the item's own price, told to you upfront before anything is confirmed.</p>
     <div id="decorList"></div>
   </div>
@@ -275,9 +286,24 @@ footer .fnote{margin-top:26px;font-size:11px;color:#8f6d76;}
     </div>
     <div class="about-grid">
       <div class="about-card"><div class="lbl">EMAIL</div><div class="val">maisondefleur.mv@gmail.com</div></div>
-      <div class="about-card"><div class="lbl">CALL</div><div class="val">973-3994</div></div>
+      <div class="about-card"><div class="lbl">CALL</div><div class="val">973-3884</div></div>
       <div class="about-card"><div class="lbl">VIBER</div><div class="val">973-3884</div></div>
       <div class="about-card"><div class="lbl">WHATSAPP</div><div class="val">973-3884</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="discounts">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">A LITTLE EXTRA</div>
+      <h2>Discounts</h2>
+      <p>A few ways your bouquet costs a little less.</p>
+    </div>
+    <div class="policy-list">
+      <div class="policy"><div class="mark"></div><p><b>Up to 20% off for family and friends.</b></p></div>
+      <div class="policy"><div class="mark"></div><p><b>10% off for our loyal, returning customers.</b></p></div>
+      <div class="policy"><div class="mark"></div><p><b>5% off for every MVR 350 your order passes</b>, stacking up to 30% off in total.</p></div>
     </div>
   </div>
 </section>
@@ -379,12 +405,11 @@ FLOWERS.forEach((f,idx)=>{
   }).join('');
   fc.innerHTML += `<div class="cat" id="cat-${idx}">
     <div class="cat-head" onclick="document.getElementById('cat-${idx}').classList.toggle('open')">
-      <h3>${f.n}</h3><div style="display:flex;align-items:center;"><span class="cnt">${f.s.length} size${f.s.length>1?'s':''}</span><span class="chev"></span></div>
+      ${phBlock(f.img,'')}
+      <div class="cat-head-info"><h3>${f.n}</h3><p class="blurb-head">${f.d}</p></div>
+      <div class="cat-head-right"><span class="cnt">${f.s.length} size${f.s.length>1?'s':''}</span><span class="chev"></span></div>
     </div>
-    <div class="cat-body"><div class="item">
-      ${phBlock(f.img)}
-      <div class="item-info"><h4>${f.n}</h4><p class="blurb">${f.d}</p><div class="sizes">${sizesHtml}</div></div>
-    </div></div>
+    <div class="cat-body"><div class="sizes-wrap"><div class="sizes">${sizesHtml}</div></div></div>
   </div>`;
 });
 // fix addItem calls to also flag qty tag (simplify: wrap addItem)
@@ -397,6 +422,13 @@ window.addItem = function(cat,name,size,price,tagId){
   if(tag){ const it = cart.find(i=>i.key===key); tag.style.display='inline-block'; tag.textContent = 'x'+it.qty; }
   render();
 };
+
+// wrapping showcase
+const wg = document.getElementById('wrapGrid');
+for(let i=1;i<=5;i++){
+  wg.innerHTML += `<div class="showcase-card wrap-card">${phBlock('wrap'+i+'.png')}<button class="addbtn" onclick="addItem('Wrapping','Wrapping Style ${i}','',75,'wrap-${i}')">+</button>
+    <div class="showcase-label"><span>Style ${String(i).padStart(2,'0')}</span><span class="wp">MVR 75</span></div></div>`;
+}
 
 // leaves list
 const ll = document.getElementById('leavesList');
